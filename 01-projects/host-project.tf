@@ -1,14 +1,15 @@
 resource "google_project" "host_project" {
-  auto_create_network = false
+  auto_create_network = true
   # org_id              = "${var.org_id}"
-  billing_account     = "${var.billing_account}"
-  folder_id = "351671931898"
+  # billing_account     = "${var.billing_account}"
+  billing_account = "015010-65A25A-46992B"
+  folder_id = "825405594628"
   # folder_id           = "${var.folder_aiqentrega_id}"
   # name                = "${var.host_project_id}-${var.env}-${random_id.name_suffix.hex}"
   name                = "${var.host_project_id}"
   # project_id          = "${var.host_project_id}-${var.env}-${random_id.name_suffix.hex}"
   project_id          = "${var.host_project_id}"
-  deletion_policy = "DELETE"
+  # deletion_policy = "DELETE"
 }
 
 output "host_project_id" {

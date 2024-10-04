@@ -1,7 +1,14 @@
 {
     "gke_subnet_services": {
         "id": "projects/dt-sandbox-host-proj/regions/us-central1/subnetworks/dt-sandbox-service-proj-cluster-vpc-dev",
-        "name": "dt-sandbox-service-proj-cluster-vpc-dev",
+        "ip_cidr_range": "10.192.48.0/20",
+        "name": "default",
+        "secondary_ip_range": {
+            "pod_range": "10.192.80.0/20",
+            "pod_range_name": "pod-range",
+            "services_range": "10.192.64.0/20",
+            "services_range_name": "services-range"
+        },
         "self_link": "https://www.googleapis.com/compute/v1/projects/dt-sandbox-host-proj/regions/us-central1/subnetworks/dt-sandbox-service-proj-cluster-vpc-dev"
     },
     "service_private_vpc_connection": {

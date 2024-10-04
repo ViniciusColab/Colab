@@ -1,14 +1,15 @@
 resource "google_project" "service_project" {
-  auto_create_network = false
+  auto_create_network = true
   # org_id              = "${var.org_id}"
   # billing_account     = "${var.billing_account}"
-  # folder_id = "351671931898"
+  billing_account = "015010-65A25A-46992B"
+  folder_id = "825405594628"
   # folder_id           = "${var.folder_aiqfome_id}"
   # name                = "${var.service_project_id}-${var.env}-${random_id.name_suffix.hex}"
   name = "${var.service_project_id}"
   # project_id          = "${var.service_project_id}-${var.env}-${random_id.name_suffix.hex}"
   project_id = "${var.service_project_id}"
-  deletion_policy = "DELETE"
+  # deletion_policy = "DELETE"
 }
 
 output "service_project_id" {
@@ -17,21 +18,21 @@ output "service_project_id" {
 output "aiqfome_host_project_name" {
   value = "${google_project.service_project.name}"
 }
-# output "service_project_number" {
-#   value = "${google_project.service_project.number}"
-# }
-
-########################################################
-# Create a Output Files to reuse generated information #
-########################################################
-resource "local_file" "service_project" {
-  content = jsonencode({
-    service_project_id = google_project.service_project.id
-    service_project_name = google_project.service_project.name
-    # service_project_number = google_project.service_project.number
-  })
-  filename = "../local/service_project.json"
+output "service_project_number" {
+  value = "${google_project.service_project.number}"
 }
+
+# ########################################################
+# # Create a Output Files to reuse generated information #
+# ########################################################
+# resource "local_file" "service_project" {
+#   content = jsonencode({
+#     service_project_id = google_project.service_project.id
+#     service_project_name = google_project.service_project.name
+#     # service_project_number = google_project.service_project.number
+#   })
+#   filename = "../local/service_project.json"
+# }
 
 ################################
 # Enable the required services #
@@ -90,18 +91,18 @@ resource "google_project_service" "storage_google_api_service_project" {
   service = "storage-component.googleapis.com"
   disable_on_destroy = false
 }
-# Enable Cloud Build API
-resource "google_project_service" "cloudbuild_google_api_service_project" {
-  project = google_project.service_project.name
-  service = "cloudbuild.googleapis.com"
-  disable_on_destroy = false
-}
-# Enable Cloud Run API
-resource "google_project_service" "run_google_api_service_project" {
-  project = google_project.service_project.name
-  service = "run.googleapis.com"
-  disable_on_destroy = false
-}
+# # Enable Cloud Build API
+# resource "google_project_service" "cloudbuild_google_api_service_project" {
+#   project = google_project.service_project.name
+#   service = "cloudbuild.googleapis.com"
+#   disable_on_destroy = false
+# }
+# # Enable Cloud Run API
+# resource "google_project_service" "run_google_api_service_project" {
+#   project = google_project.service_project.name
+#   service = "run.googleapis.com"
+#   disable_on_destroy = false
+# }
 # Enable Cloud Functions API
 resource "google_project_service" "functions_google_api_service_project" {
   project = google_project.service_project.name
@@ -120,12 +121,12 @@ resource "google_project_service" "firestore_google_api_service_project" {
   service = "firestore.googleapis.com"
   disable_on_destroy = false
 }
-# Enable Cloud Scheduler API
-resource "google_project_service" "scheduler_google_api_service_project" {
-  project = google_project.service_project.name
-  service = "cloudscheduler.googleapis.com"
-  disable_on_destroy = false
-}
+# # Enable Cloud Scheduler API
+# resource "google_project_service" "scheduler_google_api_service_project" {
+#   project = google_project.service_project.name
+#   service = "cloudscheduler.googleapis.com"
+#   disable_on_destroy = false
+# }
 # Enable Cloud Billing API
 resource "google_project_service" "cloudbilling_google_api_service_project" {
   project = google_project.service_project.name

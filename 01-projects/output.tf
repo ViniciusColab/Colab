@@ -16,3 +16,23 @@ resource "local_file" "export_subnet" {
   })
     filename = "./projects.json"
 }
+# resource "local_file" "export_reserved_ip" {
+#   content = jsonencode({
+#     host_project_nat_ip = {
+#       name = google_compute_address.host_project_nat_ip.name,
+#       address = google_compute_address.host_project_nat_ip.address,
+#       self_link = google_compute_address.host_project_nat_ip.self_link,
+#       }
+#     host_project_vpn_ip_01 = {
+#       name = google_compute_address.host_project_vpn_ip_01.name,
+#       address = google_compute_address.host_project_vpn_ip_01.address,
+#       self_link = google_compute_address.host_project_vpn_ip_01.self_link,
+#       }
+#     host_project_vpn_ip_02 = {
+#       name = google_compute_address.host_project_vpn_ip_02.name,
+#       address = google_compute_address.host_project_vpn_ip_02.address,
+#       self_link = google_compute_address.host_project_vpn_ip_02.self_link,
+#       }
+#   })
+#     filename = "./reserved-ip.json"
+# }

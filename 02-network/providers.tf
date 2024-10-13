@@ -14,6 +14,7 @@ terraform {
 locals {
     # Projects
     projects = jsondecode(file("../01-projects/projects.json"))
+    reserved_ip = jsondecode(file("../01-projects/reserved-ip.json"))
     }
 
 # Configure the Google Cloud Provider

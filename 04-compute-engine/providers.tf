@@ -14,6 +14,7 @@ terraform {
 locals {
     # Projects
     projects = jsondecode(file("../01-projects/projects.json"))
+    reserved_ip = jsondecode(file("../01-projects/reserved-ip.json"))
     # Networks and Subnets
     networks = jsondecode(file("../02-network/network.json"))
     }

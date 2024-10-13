@@ -38,9 +38,9 @@ resource "google_sql_database_instance" "service_mysql_instance" {
 
     ip_configuration {
       ipv4_enabled = true
-      allocated_ip_range = local.network.service_project_private_ip_address.name
+      allocated_ip_range = local.networks.service_project_private_ip_address.name
 
-      private_network = local.network.service_private_vpc_connection.network
+      private_network = local.networks.service_private_vpc_connection.network
       enable_private_path_for_google_cloud_services = true
 
       authorized_networks {

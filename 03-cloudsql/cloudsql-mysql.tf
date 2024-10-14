@@ -1,58 +1,58 @@
-resource "google_sql_database_instance" "service_mysql_instance" {
-  provider = google-beta
-  project = local.projects.service_project.name
+# resource "google_sql_database_instance" "service_mysql_instance" {
+#   provider = google-beta
+#   project = local.projects.service_project.name
 
-  name             = "${var.service_project_id}-mysql-instance-${var.env}"
-  region           = var.region_id
-  database_version = "MYSQL_8_4"
+#   name             = "${var.service_project_id}-mysql-instance-${var.env}"
+#   region           = var.region_id
+#   database_version = "MYSQL_8_4"
 
-  instance_type = "CLOUD_SQL_INSTANCE"
+#   instance_type = "CLOUD_SQL_INSTANCE"
 
-  settings {
-    tier = "db-f1-micro"
-    # tier = "db-custom-2-8192"
+#   settings {
+#     tier = "db-f1-micro"
+#     # tier = "db-custom-2-8192"
 
-    pricing_plan = "PER_USE"
+#     pricing_plan = "PER_USE"
 
-    activation_policy = "ALWAYS"
-    availability_type = "ZONAL"
+#     activation_policy = "ALWAYS"
+#     availability_type = "ZONAL"
 
-    backup_configuration {
-      backup_retention_settings {
-        retained_backups = 7
-        retention_unit   = "COUNT"
-      }
-      enabled                        = false
-      # # location                       = "us"
-      # point_in_time_recovery_enabled = false
-      # start_time                     = "20:00"
-      # transaction_log_retention_days = 7
-    }
+#     backup_configuration {
+#       backup_retention_settings {
+#         retained_backups = 7
+#         retention_unit   = "COUNT"
+#       }
+#       enabled                        = false
+#       # # location                       = "us"
+#       # point_in_time_recovery_enabled = false
+#       # start_time                     = "20:00"
+#       # transaction_log_retention_days = 7
+#     }
 
-    connector_enforcement = "NOT_REQUIRED"
-    disk_autoresize       = true
-    disk_autoresize_limit = 0
-    disk_size             = 10
-    disk_type             = "PD_SSD"
-    edition               = "ENTERPRISE"
+#     connector_enforcement = "NOT_REQUIRED"
+#     disk_autoresize       = true
+#     disk_autoresize_limit = 0
+#     disk_size             = 10
+#     disk_type             = "PD_SSD"
+#     edition               = "ENTERPRISE"
 
-    ip_configuration {
-      ipv4_enabled = true
-      allocated_ip_range = local.networks.service_project_private_ip_address.name
+#     ip_configuration {
+#       ipv4_enabled = false
+#       allocated_ip_range = local.networks.service_project_private_ip_address.name
 
-      private_network = local.networks.service_private_vpc_connection.network
-      enable_private_path_for_google_cloud_services = true
+#       private_network = local.networks.service_private_vpc_connection.network
+#       enable_private_path_for_google_cloud_services = true
 
-      authorized_networks {
-        name = "carlokos-vpn-br"
-        value = "129.148.29.13/32"
-      }
-    }
+#       authorized_networks {
+#         name = "carlokos-vpn-br"
+#         value = "129.148.29.13/32"
+#       }
+#     }
 
-    location_preference {
-      zone = var.zone_01_id
-    }
-  }
+#     location_preference {
+#       zone = var.zone_01_id
+#     }
+#   }
 
-  deletion_protection = false
-}
+#   deletion_protection = false
+# }

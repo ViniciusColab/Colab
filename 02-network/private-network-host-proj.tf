@@ -1,7 +1,6 @@
 ##############################################################
 # Create the PRIVATE SERVICES ACCESS in Network Host Project #
 ##############################################################
-
 # Create a PSN Connection to the Private Connection
 resource "google_service_networking_connection" "service_private_vpc_connection" {
   provider = google-beta
@@ -25,5 +24,4 @@ output "service_private_vpc_connection_network" {
 }
 # output "service_private_vpc_connection_self_link" {
 #   value = google_service_networking_connection.service_private_vpc_connection.self_link
-  
 # }

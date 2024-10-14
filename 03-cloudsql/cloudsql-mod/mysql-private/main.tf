@@ -24,25 +24,30 @@ locals {
     "You cannot reuse an instance name for up to a week after you have deleted an instance."
     See https://cloud.google.com/sql/docs/mysql/delete-instance for details.
   */
-  network_name = "${var.network_name}-safer-${random_id.suffix.hex}"
+  # network_name = "${var.network_name}-safer-${random_id.suffix.hex}"
+  # Projects
+    projects = jsondecode(file("../../../01-projects/projects.json"))
+    reserved_ip = jsondecode(file("../../../01-projects/reserved-ip.json"))
+    # Networks and Subnets
+    networks = jsondecode(file("../../../02-network/network.json"))
 }
 
-module "network-safer-mysql-simple" {
-  source  = "terraform-google-modules/network/google"
-  version = "~> 9.0"
+# module "network-safer-mysql-simple" {
+#   source  = "terraform-google-modules/network/google"
+#   version = "~> 9.0"
 
-  project_id   = var.project_id
-  network_name = local.network_name
+#   project_id   = var.project_id
+#   network_name = local.network_name
 
-  subnets = []
-}
+#   subnets = []
+# }
 
 module "private-service-access" {
   source  = "terraform-google-modules/sql-db/google//modules/private_service_access"
   version = "~> 22.0"
 
-  project_id      = var.project_id
-  vpc_network     = module.network-safer-mysql-simple.network_name
+  project_id      = local.projects.service_project.name
+  vpc_network     = local.networks.vpc_shared_network.self_link
   deletion_policy = "ABANDON"
 }
 
@@ -52,7 +57,7 @@ module "safer-mysql-db" {
 
   name                 = var.db_name
   random_instance_name = true
-  project_id           = var.project_id
+  project_id           = local.projects.service_project.name
 
   deletion_protection = false
 
@@ -99,10 +104,12 @@ module "safer-mysql-db" {
     }
   ]
 
-  assign_public_ip   = true
-  vpc_network        = module.network-safer-mysql-simple.network_self_link
-  allocated_ip_range = module.private-service-access.google_compute_global_address_name
+  assign_public_ip   = false
+  # vpc_network        = module.network-safer-mysql-simple.network_self_link
+  vpc_network = local.networks.service_private_vpc_connection.network
+  # allocated_ip_range = module.private-service-access.google_compute_global_address_name
+  allocated_ip_range = local.networks.service_project_private_ip_address.self_link
 
   // Optional: used to enforce ordering in the creation of resources.
-  module_depends_on = [module.private-service-access.peering_completed]
+  # module_depends_on = [module.private-service-access.peering_completed]
 }

@@ -17,16 +17,24 @@
 variable "project_id" {
   type        = string
   description = "The project to run tests against"
+  default = "dt-sandbox-service-proj"
+}
+
+variable "host_project_id" {
+  type        = string
+  description = "The project to run tests against"
+  default = "dt-sandbox-host-proj"
 }
 
 variable "network_name" {
-  default = "mysql-private"
+  # default = "mysql-private"
   type    = string
+  default = "dt-sandbox-service-proj-shared-vpc"
 }
 
 variable "db_name" {
   description = "The name of the SQL Database instance"
-  default     = "example-mysql-private"
+  default     = "example-cloudsql-private"
 }
 
 variable "cloudsql_mysql_sa" {
